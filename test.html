@@ -1,0 +1,126 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset=utf-8>
+	<title>User</title>
+	
+</head>
+<body>
+
+	<script id="main-template" type="text/x-handlebars-template">
+		{{!-- partialheader --}}
+		{{> partialsenders}}
+		{{> partialage}}
+	</script>		
+    
+<div id="foo">
+-
+</div>
+
+<script id="senders-template" type="text/x-handlebars-template">
+	<ul>
+		{{#each senders}}
+		<li>
+			{{firstname}} 
+			{{lastname}}
+		</li>
+		{{/each}}
+		</ul>
+		<p>wibble</p>
+		{{senders.1.lastname}}
+		{{--user.lastname--}}
+		{{--lastname--}}
+</script>
+
+<script id="age-template" type="text/x-handlebars-template">
+<p>{{senders.1.age}}</p>
+{{#each senders}}
+<p>{{firstname}}</p>
+{{/each}}
+</script>
+
+
+
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<script src="http://cloud.github.com/downloads/wycats/handlebars.js/handlebars-1.0.0.beta.6.js"></script>
+
+<script>
+
+(function() {
+
+	var User = {
+		init: function( config ) {
+			this.url = 'events.tmpl';
+			this.template = config.template;
+			this.container = config.container;
+
+			this.fetch();
+		},
+
+		attachTemplate: function() {
+			Handlebars.registerPartial("partialsenders", $("#senders-template").html());
+			Handlebars.registerPartial("partialage", $("#age-template").html());
+			
+			var template = Handlebars.compile( this.template );
+			this.container.append( template( {senders: this.senders, user: this.senders[1], lastname: this.senders[1].lastname} ) );
+			
+		},
+
+		fetch: function() {
+			var self = this;
+
+			$.getJSON( this.url, function( data ) {
+				self.senders = data.user;
+				self.attachTemplate(); 
+				
+			});
+		}
+	};
+
+	var loadUser = function() {
+		User.init({
+			template: $('#main-template').html(),
+			container: $('#foo'),
+		});
+	};
+
+	/*var partials = [
+		{name:"partialheader", path: "hbs/header.txt"}
+	];
+	
+	var partialCount = partials.length;
+	
+	for (var i = 0; i < partials.length; i++) {
+		var path = partials[i].path;
+		var name = partials[i].name;
+		$.get( {url:path}, function( data ) {
+			console.log(data);
+				Handlebars.registerPartial(name, data);
+				partialCount--;
+				if (!partialCount) {
+					loadUser();
+				}
+			});
+	}*/
+	
+	loadUser();
+
+	
+
+})();
+
+</script>
+
+
+</body>
+</html>
+
+
+
+
+
+
+
+

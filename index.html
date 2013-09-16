@@ -1,0 +1,85 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset=utf-8>
+	<title>Mustache</title>
+<style>
+h2 span { color: gray; font-size: .8em; }
+</style>
+</head>
+<body>
+
+<ul class="tweets">
+</ul>
+<div class="code"></div>
+
+
+
+
+	<script id="template" type="text/x-handlebars-template">
+		{{#each this}}
+			<h2>{{fullName author}}</h2>
+			<p>{{{tweet}}}</p>
+		{{/each}}
+	</script>
+    
+    <script id="template2" type="text/x-handlebars-template">
+		
+			<h2>{{{code}}}</h2>
+		
+	</script>
+    
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script src="https://raw.github.com/wycats/handlebars.js/1.0.0/dist/handlebars.js"></script>
+
+<script>
+
+(function() {
+	var context = [
+		{
+			author: { first: 'Kristina', last: 'Thrower'},
+			tweet: '30 Days to Learn jQuery Rocks',
+			quote: 'Never ever, ever, ever give up.'
+		},
+		{
+			author: { first: 'John', last: 'Doe' },
+			tweet: '<strong>30 Days</strong> to Learn jQuery Rocks',
+		}
+		
+	],
+	
+	
+	template = Handlebars.compile( $('#template').html() );
+	Handlebars.registerHelper('fullName', function( author ) {
+		return author.first + ' ' + author.last;
+	});
+
+	$('ul.tweets').append( template(context) );
+	
+// template 2
+	var copy = {			
+			code: '<p>jhjh</p>'
+		}		
+	
+	
+	template = Handlebars.compile( $('#template2').html() );
+	$('div.code').append( template(copy) );
+	
+})();
+
+</script>
+
+
+
+
+</body>
+</html>
+
+
+
+
+
+
+
+
