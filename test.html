@@ -3,7 +3,9 @@
 <head>
 	<meta charset=utf-8>
 	<title>Test File for Handlebars..</title>
-	
+	<style>
+    h2 {font: normal 14px Tahoma, Geneva, sans-serif; text-transform: uppercase}
+    </style>
 </head>
 <body>
 
@@ -14,7 +16,7 @@
 	</script>		
     
 <div id="foo">
--
+<h2>list all of the names and ages of people in the json file</h2>
 </div>
 
 <script id="senders-template" type="text/x-handlebars-template">
@@ -26,14 +28,22 @@
 		</li>
 		{{/each}}
 		</ul>
-		<p>wibble</p>
+		<h2>show the lastname of the first person in the json file</h2>
 		{{senders.1.lastname}}
+		
+		
 		{{--user.lastname--}}
 		{{--lastname--}}
+		
+		
+		
 </script>
 
 <script id="age-template" type="text/x-handlebars-template">
+<h2>show the age of the first person in the json file</h2>
 <p>{{senders.1.age}}</p>
+
+<h2>show the firstname of the all people the json file</h2>
 {{#each senders}}
 <p>{{firstname}}</p>
 {{/each}}
